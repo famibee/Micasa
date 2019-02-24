@@ -1,0 +1,14 @@
+# Visual Studio Code cache/options directory
+.vscode/
+
+# アプリ版メインjs
+app/index.js
+
+# local db
+db.json
+
+# Node.js Tools
+node_modules/
+
+# ブラウザ版メインjs
+web/

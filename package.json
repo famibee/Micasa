@@ -1,0 +1,49 @@
+{
+	"name": "micasa",
+	"version": "0.1.0",
+	"description": "",
+	"main": "app.js",
+	"appCopyright": "(c)famibee",
+	"author": "miyazawa famibee <famibee@gmail.com> (https://famibee.blog.fc2.com/)",
+	"license": "MIT",
+	"dependencies": {
+		"image-size": "^0.7.2",
+		"react": "^16.8.3",
+		"react-dom": "^16.8.3",
+		"react-gif-player": "^0.4.2",
+		"react-lazyload": "^2.5.0",
+		"viewport-observer": "^2.3.0"
+	},
+	"devDependencies": {
+		"@types/react": "^16.8.4",
+		"@types/react-dom": "^16.8.2",
+		"@types/react-lazyload": "^2.3.1",
+		"awesome-typescript-loader": "^5.2.1",
+		"electron": "^4.0.5",
+		"source-map-loader": "^0.2.4",
+		"typescript": "^3.3.3333",
+		"webpack": "^4.29.5",
+		"webpack-cli": "^3.2.3",
+		"webpack-dev-server": "^3.2.0"
+	},
+	"scripts": {
+		"install": "npm run webpack:dev",
+		"once": "tsc -p core/ && npm run webpack:dev",
+		"dev": "tsc -p core/ -w & npm run webpack:dev:w & npm run watch:wds",
+		"start": "electron ./",
+		"webpack:dev": "webpack --mode development --config ./core/webpack.config.js",
+		"webpack:dev:w": "webpack --mode development --watch --config ./core/webpack.config.js",
+		"watch:wds": "webpack-dev-server --config ./core/wds.config.js",
+		"npm_check_updates_do": "ncu -a && npm update && npm i -D",
+		"stats": "npx webpack --config ./core/webpack.config.js --profile --json > stats.json && npx webpack-bundle-size-analyzer stats.json",
+		"webpack:pro": "webpack --mode production --config ./core/webpack.config.js",
+		"pack:win": "npm run webpack:pro && electron-builder ./build/win32-x64 --platform=win --arch=x64",
+		"pack:mac": "npm run webpack:pro && electron-builder ./build/darwin-x64 --platform=mac --arch=x64"
+	},
+	"keywords": [],
+	"bugs": {
+		"url": "https://github.com/famibee/micasa/issues",
+		"email": "famibee@gmail.com"
+	},
+	"homepage": "https://famibee.blog.fc2.com/"
+}
