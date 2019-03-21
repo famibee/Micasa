@@ -75,7 +75,7 @@ export class AppMain extends AppBase {
 			}
 
 	//console.log(`fn:AppMain nm:${nm} ext:${m_path.extname(nm).slice(1)}`);
-			switch (m_path.extname(nm).slice(1)) {
+			switch (m_path.extname(nm).slice(1).toLowerCase()) {
 				case 'mp4':
 				case 'mov':
 				case 'webm':
@@ -93,10 +93,23 @@ export class AppMain extends AppBase {
 					elm.load();
 					break;
 
-				default:
+				case 'bmp':
+				case 'cur':
+				case 'gif':
+				case 'icns':
+				case 'ico':
+				case 'jpeg':
+				case 'jpg':
+				case 'png':
+				case 'psd':
+				case 'tiff':
+				case 'webp':
+				case 'svg':
+				case 'dds':
 					const d = sizeOf(path + nm);
 					const pic: infPic = {nm: nm, width: d.width, height: d.height};
 					a.push(pic);
+					break;
 			}
 		});
 	}

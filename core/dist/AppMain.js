@@ -63,7 +63,7 @@ class AppMain extends AppBase_1.AppBase {
                 this.make_db_fld(path + nm + '/', fld2);
                 return;
             }
-            switch (m_path.extname(nm).slice(1)) {
+            switch (m_path.extname(nm).slice(1).toLowerCase()) {
                 case 'mp4':
                 case 'mov':
                 case 'webm':
@@ -80,10 +80,23 @@ class AppMain extends AppBase_1.AppBase {
                     elm.src = path + nm;
                     elm.load();
                     break;
-                default:
+                case 'bmp':
+                case 'cur':
+                case 'gif':
+                case 'icns':
+                case 'ico':
+                case 'jpeg':
+                case 'jpg':
+                case 'png':
+                case 'psd':
+                case 'tiff':
+                case 'webp':
+                case 'svg':
+                case 'dds':
                     const d = sizeOf(path + nm);
                     const pic = { nm: nm, width: d.width, height: d.height };
                     a.push(pic);
+                    break;
             }
         });
     }

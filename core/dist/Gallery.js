@@ -75,7 +75,7 @@ class Gallery extends React.Component {
             return React.createElement("span", { key: v.nm }, a);
         }
         let he;
-        switch (path.extname(v.nm).slice(1)) {
+        switch (path.extname(v.nm).slice(1).toLowerCase()) {
             case 'mp4':
             case 'mov':
             case 'webm':
@@ -84,10 +84,23 @@ class Gallery extends React.Component {
                 break;
             case 'gif':
                 he =
-                    React.createElement(GifPlayer, { gif: s.cwd + v.nm, "data-idx": idx, width: v.width / v.height * s.cmnH, height: s.cmnH });
+                    React.createElement(GifPlayer, { gif: s.cwd + v.nm, "data-idx": idx, width: v.width / v.height * s.cmnH, height: s.cmnH, onContextMenu: (e) => this.evRClick(e) });
                 break;
-            default: he =
-                React.createElement("img", { src: s.cwd + v.nm, "data-idx": idx, width: v.width / v.height * s.cmnH, height: s.cmnH, onClick: e => this.evClick(e), onContextMenu: e => this.evRClick(e) });
+            case 'psd':
+                he =
+                    React.createElement("img", { src: '', title: s.cwd + v.nm });
+                break;
+            case 'bmp':
+            case 'jpeg':
+            case 'jpg':
+            case 'png':
+            case 'webp':
+                he =
+                    React.createElement("img", { src: s.cwd + v.nm, "data-idx": idx, width: v.width / v.height * s.cmnH, height: s.cmnH, onClick: e => this.evClick(e), onContextMenu: e => this.evRClick(e) });
+                break;
+            default: return React.createElement("span", null,
+                "title=",
+                s.cwd + v.nm);
         }
         return React.createElement(react_lazyload_1.default, { key: v.nm, once: true }, he);
     }
@@ -102,8 +115,8 @@ class Gallery extends React.Component {
     evRClick(e) {
         if (this.initCtxmnu())
             return;
-        const posX = e.pageX;
-        const posY = e.pageY;
+        const posX = e.pageX - pageXOffset;
+        const posY = e.pageY - pageYOffset;
         this.ctxmnu.style.left = posX + 'px';
         this.ctxmnu.style.top = posY + 'px';
         this.cls.add('show');

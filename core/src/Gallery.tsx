@@ -82,7 +82,7 @@ export class Gallery extends React.Component<{stt: sttStage;}, {}> {
 		}
 
 		let he: JSX.Element;
-		switch (path.extname(v.nm).slice(1)) {
+		switch (path.extname(v.nm).slice(1).toLowerCase()) {
 			case 'mp4':
 			case 'mov':
 			case 'webm':	he =
@@ -93,14 +93,26 @@ export class Gallery extends React.Component<{stt: sttStage;}, {}> {
 
 			case 'gif':	he =
 				<GifPlayer gif={s.cwd + v.nm} data-idx={idx}
-					width={v.width/v.height*s.cmnH} height={s.cmnH}/>;
+					width={v.width/v.height*s.cmnH} height={s.cmnH}
+					onContextMenu={(e: any)=> this.evRClick(e)}/>;
 				break;
 
-			default:	he =
-				<img src={s.cwd + v.nm} data-idx={idx}
+			case 'psd':	he =	// TODO: いずれはPSDサポート
+				<img src='' title={s.cwd + v.nm}/>
+				break;
+
+			case 'bmp':
+			case 'jpeg':
+			case 'jpg':
+			case 'png':
+			case 'webp':	he =
+			<img src={s.cwd + v.nm} data-idx={idx}
 					width={v.width/v.height*s.cmnH} height={s.cmnH}
 					onClick={e=> this.evClick(e)}
 					onContextMenu={e=> this.evRClick(e)}/>;
+				break;
+
+			default:	return <span>title={s.cwd + v.nm}</span>;
 		}
 		return <LazyLoad key={v.nm} once>{he}</LazyLoad>;
 	}
@@ -116,8 +128,8 @@ export class Gallery extends React.Component<{stt: sttStage;}, {}> {
 	private evRClick(e: any) {
 		if (this.initCtxmnu()) return;
 
-		const posX = e.pageX;
-		const posY = e.pageY;
+		const posX = e.pageX -pageXOffset;
+		const posY = e.pageY -pageYOffset;
 		this.ctxmnu.style.left = posX +'px';
 		this.ctxmnu.style.top = posY +'px';
 		this.cls.add('show');
